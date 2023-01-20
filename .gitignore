@@ -13,7 +13,7 @@ venv/
 *.ui
 ,venv/
 。venv/
-
+*test*
 
 
 # local file / dir
