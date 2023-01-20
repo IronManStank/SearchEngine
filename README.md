@@ -1,23 +1,48 @@
 # SearchEngine
 
 #### 介绍
+
 快速打开需要搜索的信息，一键直达！
 
+**痛点：**
+
+你是否经常遇见这样的情景：
+
+- 在项目进行中需要某方面的知识，求助与各大搜索引擎但是广告满天飞，有用信息太少？
+- 在找到某信息流之后，需要打开多个标签页，但是需要一个一个的打开，浪费时间？
+- 想要查找某类型的文件，例如 pdf，但是搜索引擎不给力？
+
+**亮点功能**：
+
+- 一键打开数十个以及以上搜索标签页，让信息的获取变得简单。此功能上限取决于电脑配置
+- 基于 pyqt5 的图形界面，操作简单
+- 预计支持百度、谷歌、必应、夸克等搜索引擎
+- 预计支持查找某类型的文件，例如 pdf，doc 等（高级搜索），此部分功能见高级功能，仍在开发中。
+
 #### 软件架构
-软件架构说明
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+本软件界面使用 pyqt 构建，内核由 python 实现。
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+**内测版：**
+
+1.  Fork 本仓库源码
+2.  安装 python 依赖：pip install -r requirements.txt
+3.  运行：python main.py，此时出现对话框
+4.  再对话框中按照提示输入搜索字符，选择搜索引擎，点击 search 即可进行搜索
+
+**注意**：
+
+5.  本软件目前支持 baidu 引擎，其余引擎在开发中
+6.  本软件目前仅支持 windows 系统，其余系统在开发中
+7.  本软件可实现搜索页面的快速打开，但是打开数量有限，如需打开更多页面，可通过搜索数量进行指定，但是请注意，搜索数量过多会导致浏览器卡顿以及页面打开速度变慢，甚至无法打开！
+8.  本软件可将
+
+**正式版：**
+
+待定！
+
 
 #### 参与贡献
 
@@ -25,13 +50,3 @@
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
