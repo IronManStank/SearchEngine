@@ -3,7 +3,6 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from searchui import Ui_MainWindow
-from fake_useragent import UserAgent
 import webbrowser
 from lxml import etree
 from time import sleep
