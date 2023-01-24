@@ -18,7 +18,8 @@ class Ui_MainWindow(object):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(800, 600))
         MainWindow.setMaximumSize(QtCore.QSize(800, 600))
@@ -43,7 +44,8 @@ class Ui_MainWindow(object):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.toolButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.toolButton.sizePolicy().hasHeightForWidth())
         self.toolButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
@@ -132,7 +134,8 @@ class Ui_MainWindow(object):
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
