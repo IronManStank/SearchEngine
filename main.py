@@ -19,14 +19,14 @@ class main(QMainWindow, Ui_MainWindow):
         # self.baidu.setChecked(True)
 
         self.baidu.stateChanged.connect(lambda: self.search_url(self.baidu))
-        self.biying.stateChanged.connect(lambda: self.search_url(self.biying))
-        self.kuake.stateChanged.connect(lambda: self.search_url(self.kuake))
+        self.bing.stateChanged.connect(lambda: self.search_url(self.bing))
+        self.quark.stateChanged.connect(lambda: self.search_url(self.quark))
 
         self.keyword = ''
         self.page_all_num = 20
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
-                               'biying': r'https://cn.bing.com/search?q={}&first={}',
-                               'kuake': r'https://www.qwant.com/?q={}&count={}'}
+                               'bing': r'https://cn.bing.com/search?q={}&first={}',
+                               'quark': r'https://www.qwant.com/?q={}&count={}'}
 
         self.url = self.search_url_dic['baidu']
         self.item_div = r'//div[@class="result c-container xpath-log new-pmd"]'
@@ -39,19 +39,22 @@ class main(QMainWindow, Ui_MainWindow):
                         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
                         }
 
-        rule =lambda x :x//10+1 if x % 10!=0 else x//10
-        self.page_num =2
+        
+        self.page_num = 2
         self.params = {'wd': self.keyword, 'pn': str(
             self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
 
         self.linklist = []
+        
+    @staticmethod
+    def rule(x): return x//10+1 if x % 10 != 0 else x//10
 
     def setkeyword(self, keyword):
         self.keyword = keyword
 
     def setpage_all_num(self, page_all_num):
         self.page_all_num = page_all_num
-        self.page_num = rule(self.page_all_num)
+        self.page_num = self.rule(self.page_all_num)
         print(self.page_all_num)
 
     def search_url(self, e):
@@ -59,9 +62,9 @@ class main(QMainWindow, Ui_MainWindow):
         if e.text() == '百度':
             self.url = self.search_url_dic['baidu']
         elif e.text() == '必应':
-            self.url = self.search_url_dic['biying']
+            self.url = self.search_url_dic['bing']
         else:
-            self.url = self.search_url_dic['kuake']
+            self.url = self.search_url_dic['quark']
 
     def search(self):
         for page in range(self.page_num):
@@ -81,7 +84,7 @@ class main(QMainWindow, Ui_MainWindow):
                 print(item.xpath('.//h3/a')[0].text)
                 link = item.xpath('.//h3/a')[0].get('href')
                 self.linklist.append(link)
-        
+
         for link in self.linklist:
             webbrowser.open(url=link)
             sleep(0.3)
