@@ -11,19 +11,10 @@ venv/
 .venv/
 .gitignore
 *.ui
-,venv/
-。venv/
 *test*
-
 
 # local file / dir
 *_local*
 
 # OSX file
 .DS_Store
-
-# token file
-token.txt
-
-# emailconfig
-email_config.json
