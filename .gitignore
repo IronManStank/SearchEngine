@@ -12,6 +12,9 @@ venv/
 .gitignore
 *.ui
 *test*
+build/
+dist/
+*.spec
 
 # local file / dir
 *_local*
