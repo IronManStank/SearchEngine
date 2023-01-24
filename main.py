@@ -1,11 +1,13 @@
-import requests
 import sys
+import webbrowser
+from time import sleep
+
+import requests
+from lxml import etree
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
+
 from searchui import Ui_MainWindow
-import webbrowser
-from lxml import etree
-from time import sleep
 
 
 class main(QMainWindow, Ui_MainWindow):
@@ -19,14 +21,14 @@ class main(QMainWindow, Ui_MainWindow):
         # self.baidu.setChecked(True)
 
         self.baidu.stateChanged.connect(lambda: self.search_url(self.baidu))
-        self.biying.stateChanged.connect(lambda: self.search_url(self.biying))
-        self.kuake.stateChanged.connect(lambda: self.search_url(self.kuake))
+        self.bing.stateChanged.connect(lambda: self.search_url(self.bing))
+        self.quark.stateChanged.connect(lambda: self.search_url(self.quark))
 
         self.keyword = ''
         self.page_all_num = 20
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
-                               'biying': r'https://cn.bing.com/search?q={}&first={}',
-                               'kuake': r'https://www.qwant.com/?q={}&count={}'}
+                               'bing': r'https://cn.bing.com/search?q={}&first={}',
+                               'quark': r'https://www.qwant.com/?q={}&count={}'}
 
         self.url = self.search_url_dic['baidu']
         self.item_div = r'//div[@class="result c-container xpath-log new-pmd"]'
@@ -35,12 +37,13 @@ class main(QMainWindow, Ui_MainWindow):
         self.spinBox.valueChanged.connect(self.setpage_all_num)
         self.pushButton.clicked.connect(self.search)
 
-        self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }
+        self.headers = {
+            'User-Agent':
+            'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        }
 
-        rule =lambda x :x//10+1 if x % 10!=0 else x//10
-        self.page_num =2
+        self.page_num = 2
         self.params = {'wd': self.keyword, 'pn': str(
             self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
 
@@ -50,6 +53,7 @@ class main(QMainWindow, Ui_MainWindow):
         self.keyword = keyword
 
     def setpage_all_num(self, page_all_num):
+        def rule(x): return x//10+1 if x % 10 != 0 else x//10
         self.page_all_num = page_all_num
         self.page_num = rule(self.page_all_num)
         print(self.page_all_num)
@@ -59,9 +63,9 @@ class main(QMainWindow, Ui_MainWindow):
         if e.text() == '百度':
             self.url = self.search_url_dic['baidu']
         elif e.text() == '必应':
-            self.url = self.search_url_dic['biying']
+            self.url = self.search_url_dic['bing']
         else:
-            self.url = self.search_url_dic['kuake']
+            self.url = self.search_url_dic['quark']
 
     def search(self):
         for page in range(self.page_num):
@@ -81,7 +85,7 @@ class main(QMainWindow, Ui_MainWindow):
                 print(item.xpath('.//h3/a')[0].text)
                 link = item.xpath('.//h3/a')[0].get('href')
                 self.linklist.append(link)
-        
+
         for link in self.linklist:
             webbrowser.open(url=link)
             sleep(0.3)
