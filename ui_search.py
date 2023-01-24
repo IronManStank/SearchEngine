@@ -15,22 +15,15 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
-<<<<<<< HEAD
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-=======
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            MainWindow.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(800, 600))
         MainWindow.setMaximumSize(QtCore.QSize(800, 600))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-<<<<<<< HEAD
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.gridLayout = QtWidgets.QGridLayout()
@@ -48,93 +41,15 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.quark, 4, 2, 1, 1)
         self.toolButton = QtWidgets.QToolButton(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-=======
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName("gridLayout")
-        self.gridLayout_2 = QtWidgets.QGridLayout()
-        self.gridLayout_2.setSizeConstraint(
-            QtWidgets.QLayout.SetDefaultConstraint)
-        self.gridLayout_2.setContentsMargins(7, 7, 7, 7)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setContentsMargins(2, 2, 2, 2)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.baidu = QtWidgets.QCheckBox(self.centralwidget)
-        self.baidu.setChecked(True)
-        self.baidu.setAutoExclusive(True)
-        self.baidu.setObjectName("baidu")
-        self.horizontalLayout.addWidget(self.baidu)
-        self.bing = QtWidgets.QCheckBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.bing.sizePolicy().hasHeightForWidth())
-        self.bing.setSizePolicy(sizePolicy)
-        self.bing.setAutoExclusive(True)
-        self.bing.setObjectName("bing")
-        self.horizontalLayout.addWidget(self.bing)
-        self.quark = QtWidgets.QCheckBox(self.centralwidget)
-        self.quark.setAutoExclusive(True)
-        self.quark.setTristate(False)
-        self.quark.setObjectName("quark")
-        self.horizontalLayout.addWidget(self.quark)
-        self.gridLayout_2.addLayout(self.horizontalLayout, 4, 0, 1, 1)
-        self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
-        font = QtGui.QFont()
-        font.setFamily("Microsoft JhengHei")
-        font.setPointSize(13)
-        self.spinBox.setFont(font)
-        self.spinBox.setWrapping(False)
-        self.spinBox.setAlignment(QtCore.Qt.AlignCenter)
-        self.spinBox.setMinimum(10)
-        self.spinBox.setObjectName("spinBox")
-        self.gridLayout_2.addWidget(self.spinBox, 1, 1, 1, 2)
-        self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_3.sizePolicy().hasHeightForWidth())
-        self.label_3.setSizePolicy(sizePolicy)
-        self.label_3.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_3.setAutoFillBackground(False)
-        self.label_3.setAlignment(
-            QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout_2.addWidget(
-            self.label_3, 3, 0, 1, 3, QtCore.Qt.AlignVCenter)
-        spacerItem = QtWidgets.QSpacerItem(
-            200, 160, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.gridLayout_2.addItem(spacerItem, 4, 1, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
-        self.toolButton = QtWidgets.QToolButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.toolButton.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.toolButton.sizePolicy().hasHeightForWidth())
         self.toolButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
         font.setPointSize(12)
         self.toolButton.setFont(font)
         self.toolButton.setObjectName("toolButton")
-<<<<<<< HEAD
         self.gridLayout.addWidget(self.toolButton, 4, 3, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
@@ -154,6 +69,7 @@ class Ui_MainWindow(object):
         font.setFamily("Microsoft YaHei")
         font.setPointSize(12)
         self.baidu.setFont(font)
+        self.baidu.setChecked(True)
         self.baidu.setAutoExclusive(True)
         self.baidu.setObjectName("baidu")
         self.gridLayout.addWidget(self.baidu, 4, 0, 1, 1)
@@ -167,6 +83,7 @@ class Ui_MainWindow(object):
         font.setFamily("Microsoft YaHei")
         font.setPointSize(12)
         self.lineEdit.setFont(font)
+        self.lineEdit.setClearButtonEnabled(False)
         self.lineEdit.setObjectName("lineEdit")
         self.gridLayout.addWidget(self.lineEdit, 0, 1, 1, 3)
         self.spinBox = QtWidgets.QSpinBox(self.centralwidget)
@@ -206,47 +123,18 @@ class Ui_MainWindow(object):
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-=======
-        self.gridLayout_2.addWidget(self.toolButton, 4, 2, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pushButton.sizePolicy().hasHeightForWidth())
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
         self.pushButton.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
         font.setPointSize(12)
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
-<<<<<<< HEAD
         self.gridLayout.addWidget(self.pushButton, 5, 0, 1, 4)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-=======
-        self.gridLayout_2.addWidget(self.pushButton, 5, 0, 1, 3)
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.lineEdit.sizePolicy().hasHeightForWidth())
-        self.lineEdit.setSizePolicy(sizePolicy)
-        self.lineEdit.setText("")
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout_2.addWidget(self.lineEdit, 0, 1, 1, 2)
-        self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.label_4.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei")
@@ -254,7 +142,6 @@ class Ui_MainWindow(object):
         self.label_4.setFont(font)
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
-<<<<<<< HEAD
         self.gridLayout.addWidget(self.label_4, 3, 0, 1, 4)
         self.line = QtWidgets.QFrame(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
@@ -291,31 +178,6 @@ class Ui_MainWindow(object):
         self.gridLayout.setRowStretch(4, 3)
         self.gridLayout.setRowStretch(5, 3)
         self.horizontalLayout.addLayout(self.gridLayout)
-=======
-        self.gridLayout_2.addWidget(self.label_4, 0, 0, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(
-            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.gridLayout_2.addItem(spacerItem1, 2, 0, 1, 3)
-        self.gridLayout_2.setColumnMinimumWidth(0, 3)
-        self.gridLayout_2.setColumnMinimumWidth(1, 1)
-        self.gridLayout_2.setColumnMinimumWidth(2, 3)
-        self.gridLayout_2.setRowMinimumHeight(0, 3)
-        self.gridLayout_2.setRowMinimumHeight(1, 3)
-        self.gridLayout_2.setRowMinimumHeight(2, 1)
-        self.gridLayout_2.setRowMinimumHeight(3, 2)
-        self.gridLayout_2.setRowMinimumHeight(4, 1)
-        self.gridLayout_2.setRowMinimumHeight(5, 3)
-        self.gridLayout_2.setColumnStretch(0, 3)
-        self.gridLayout_2.setColumnStretch(1, 1)
-        self.gridLayout_2.setColumnStretch(2, 3)
-        self.gridLayout_2.setRowStretch(0, 3)
-        self.gridLayout_2.setRowStretch(1, 3)
-        self.gridLayout_2.setRowStretch(2, 1)
-        self.gridLayout_2.setRowStretch(3, 2)
-        self.gridLayout_2.setRowStretch(4, 1)
-        self.gridLayout_2.setRowStretch(5, 3)
-        self.gridLayout.addLayout(self.gridLayout_2, 0, 0, 1, 1)
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -323,18 +185,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-<<<<<<< HEAD
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.quark.setText(_translate("MainWindow", "夸克"))
-=======
-        MainWindow.setWindowTitle(_translate("MainWindow", "Searhc Engine"))
-        self.baidu.setText(_translate("MainWindow", "百度"))
-        self.bing.setText(_translate("MainWindow", "必应"))
-        self.quark.setText(_translate("MainWindow", "夸克"))
-        self.label_3.setToolTip(_translate("MainWindow", "选择您的搜索引擎"))
-        self.label_3.setText(_translate("MainWindow", "选择您的搜索引擎"))
-        self.label_2.setText(_translate("MainWindow", "选择打开页数："))
->>>>>>> 0983b0e9a5cf7dbd7cc5fcc0266e65b905af4d26
         self.toolButton.setText(_translate("MainWindow", "高级选项"))
         self.label_2.setText(_translate("MainWindow", "输入关键字："))
         self.baidu.setText(_translate("MainWindow", "百度"))
