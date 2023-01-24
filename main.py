@@ -23,7 +23,7 @@ class main(QMainWindow, Ui_MainWindow):
         self.kuake.stateChanged.connect(lambda: self.search_url(self.kuake))
 
         self.keyword = ''
-        self.page_all_num = 10
+        self.page_all_num = 20
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
                                'biying': r'https://cn.bing.com/search?q={}&first={}',
                                'kuake': r'https://www.qwant.com/?q={}&count={}'}
@@ -40,7 +40,7 @@ class main(QMainWindow, Ui_MainWindow):
                         }
 
         rule =lambda x :x//10+1 if x % 10!=0 else x//10
-        self.page_num = rule(self.page_all_num)
+        self.page_num =2
         self.params = {'wd': self.keyword, 'pn': str(
             self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
 
@@ -51,6 +51,7 @@ class main(QMainWindow, Ui_MainWindow):
 
     def setpage_all_num(self, page_all_num):
         self.page_all_num = page_all_num
+        self.page_num = rule(self.page_all_num)
         print(self.page_all_num)
 
     def search_url(self, e):
@@ -80,7 +81,7 @@ class main(QMainWindow, Ui_MainWindow):
                 print(item.xpath('.//h3/a')[0].text)
                 link = item.xpath('.//h3/a')[0].get('href')
                 self.linklist.append(link)
-
+        
         for link in self.linklist:
             webbrowser.open(url=link)
             sleep(0.3)
