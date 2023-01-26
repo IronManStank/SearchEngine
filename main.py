@@ -1,5 +1,6 @@
 import requests
 import sys
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from searchui import Ui_MainWindow
@@ -14,7 +15,11 @@ class main(QMainWindow, Ui_MainWindow):
         self.initUI()
 
     def initUI(self):
-        QApplication.setStyle(QStyleFactory.create('Fusion'))
+        
+        self.setStyle(QStyleFactory.create('Fusion'))
+        self.setWindowIcon(QIcon('xhy.png'))
+        self.setWindowTitle('SearchEngine')
+ 
         self.setupUi(self)
         # self.baidu.setChecked(True)
 
@@ -24,23 +29,34 @@ class main(QMainWindow, Ui_MainWindow):
 
         self.keyword = ''
         self.page_all_num = 20
+        self.page_num = 2
+        
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
-                               'bing': r'https://cn.bing.com/search?q={}&first={}',
+                               'bing': r'https://cn.bing.com/search',
                                'quark': r'https://www.qwant.com/?q={}&count={}'}
 
         self.url = self.search_url_dic['baidu']
-        self.item_div = r'//div[@class="result c-container xpath-log new-pmd"]'
+        self.linkXpath = {'baidu': r'//div[@class="result c-container xpath-log new-pmd"]',
+                          'bing':r'/html/body/div[1]/main/ol/li[@class="b_algo"]',
+                          'quark':r'//div[@class="result"]'}
+        
+        self.engine_params = {'baidu':{'wd': self.keyword, 'pn': 1,'tn': 'baiduhome', 'ie': 'utf-8'},
+                              'bing':{'q': self.keyword, 'first': 1},
+                              'quark':{'q': self.keyword, 'count': 1}
+                              }
+        
+        self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                        }       
 
         self.lineEdit.textChanged.connect(self.setkeyword)
         self.spinBox.valueChanged.connect(self.setpage_all_num)
         self.pushButton.clicked.connect(self.search)
 
-        self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }
+
 
         
-        self.page_num = 2
+        
         self.params = {'wd': self.keyword, 'pn': str(
             self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
 
@@ -67,27 +83,36 @@ class main(QMainWindow, Ui_MainWindow):
             self.url = self.search_url_dic['quark']
 
     def search(self):
+        if self.baidu.isChecked():
+            pass
+        elif self.bing.isChecked():
+            
+            pass       
+        else:
+            pass
+        
         for page in range(self.page_num):
             print(page)
-            self.params['wd'] = self.keyword
-            self.params['pn'] = str(page*10)
+            self.engine_params['baidu']['wd'] = self.keyword
+            self.engine_params['baidu']['pn'] = str(page*10)
 
             r = requests.get(
-                url=self.url, headers=self.headers, params=self.params)
-            with open(file='test.html', mode='wb') as f:
-                f.write(r.content)
+                url=self.url, headers=self.headers, params=self.engine_params['baidu'])
+
             t = etree.HTML(r.text)
 
-            selector = t.xpath(self.item_div)
+            selector = t.xpath(self.linkXpath['baidu'])
             print(selector)
             for item in selector:
                 print(item.xpath('.//h3/a')[0].text)
                 link = item.xpath('.//h3/a')[0].get('href')
                 self.linklist.append(link)
+            
 
         for link in self.linklist:
             webbrowser.open(url=link)
             sleep(0.3)
+        self.linklist.clear()
 
 
 if __name__ == '__main__':
