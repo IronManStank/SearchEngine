@@ -7,7 +7,7 @@ from lxml import etree
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
-
+from config import Config
 from get_img import BackGroundPic
 from searchui import Ui_MainWindow
 
@@ -19,15 +19,16 @@ class main(QMainWindow, Ui_MainWindow):
         
         self.initUI(self.backgroundpic.current_pic)
 
-    def initUI(self, backgraoundpic: str):
+    def initUI(self, backgraoundpic: str, config: Config):
         self.setStyle(QStyleFactory.create('Fusion'))
         
         
         
 
         # 设置背景
-        self.setStyleSheet(
-            f"#MainWindow{{border-image:url({backgraoundpic})}}")
+        if config.back_enable:
+            self.setStyleSheet(
+                f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
         # self.baidu.setChecked(True)
@@ -57,9 +58,12 @@ class main(QMainWindow, Ui_MainWindow):
                               'quark': {'q': self.keyword, 'snum': '10', 'page': 1}
                               }
 
-        self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }
+        self.headers = {
+            'User-Agent':
+            'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) \
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        }
 
         self.lineEdit.textChanged.connect(self.setkeyword)
         self.spinBox.valueChanged.connect(self.setpage_all_num)
