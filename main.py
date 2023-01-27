@@ -33,16 +33,19 @@ class main(QMainWindow, Ui_MainWindow):
         
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
                                'bing': r'https://cn.bing.com/search',
-                               'quark': r'https://www.qwant.com/?q={}&count={}'}
-
+                               'quark': r'https://quark.sm.cn/s'}
         self.url = self.search_url_dic['baidu']
         self.linkXpath = {'baidu': r'//div[@class="result c-container xpath-log new-pmd"]',
-                          'bing':r'/html/body/div[1]/main/ol/li[@class="b_algo"]',
-                          'quark':r'//div[@class="result"]'}
+                          'bing':r'//main/ol/li[@class="b_algo"]',
+                          'quark':r'/html/body//div[@id="results"]/div'}
+        
+        self.subxpath = {'baidu':r'.//h3/a',
+                         'bing':[r'.//div[@class="b_title"]/h2/a',r'.//div[@class="b_algoheader"]/a'],
+                          'quark':r'./div[1]/a'}
         
         self.engine_params = {'baidu':{'wd': self.keyword, 'pn': 1,'tn': 'baiduhome', 'ie': 'utf-8'},
                               'bing':{'q': self.keyword, 'first': 1},
-                              'quark':{'q': self.keyword, 'count': 1}
+                              'quark':{'q': self.keyword, 'snum': '10','page':1}
                               }
         
         self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
@@ -57,8 +60,7 @@ class main(QMainWindow, Ui_MainWindow):
 
         
         
-        self.params = {'wd': self.keyword, 'pn': str(
-            self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
+
 
         self.linklist = []
         
@@ -75,44 +77,142 @@ class main(QMainWindow, Ui_MainWindow):
 
     def search_url(self, e):
         print(e)
+        print(e.text())
         if e.text() == '百度':
             self.url = self.search_url_dic['baidu']
         elif e.text() == '必应':
             self.url = self.search_url_dic['bing']
         else:
             self.url = self.search_url_dic['quark']
-
-    def search(self):
-        if self.baidu.isChecked():
-            pass
-        elif self.bing.isChecked():
             
-            pass       
-        else:
-            pass
+    @staticmethod
+    def get_list(**kwargs)->list:
+        result  =[]
+        r = requests.get(
+            url=kwargs['url'], headers=kwargs['headers'], params=kwargs['params'])
         
-        for page in range(self.page_num):
-            print(page)
-            self.engine_params['baidu']['wd'] = self.keyword
-            self.engine_params['baidu']['pn'] = str(page*10)
+        with open('test.html','wb') as f:
+            f.write(r.content)
+        
+        t = etree.HTML(r.content)
 
-            r = requests.get(
-                url=self.url, headers=self.headers, params=self.engine_params['baidu'])
-
-            t = etree.HTML(r.text)
-
-            selector = t.xpath(self.linkXpath['baidu'])
-            print(selector)
-            for item in selector:
-                print(item.xpath('.//h3/a')[0].text)
-                link = item.xpath('.//h3/a')[0].get('href')
-                self.linklist.append(link)
-            
-
-        for link in self.linklist:
+        print(kwargs['linkXpath'])
+        selector = t.xpath(kwargs['linkXpath'])
+        print(selector)
+        
+        for item in selector:
+            # link = item.xpath(kwargs['subxpath'])
+            # print(link)
+            print(item)
+            if len(kwargs['subxpath'])!=1:
+                try:
+                    for rule in kwargs['subxpath']:
+                        print(rule)
+                        
+                        link = item.xpath(rule)[0].get('href')
+                        print(link)
+                        result.append(link)
+                except Exception as e :
+                    print(e)
+                    break
+                
+                
+                    
+                # finally:
+                #     continue
+            else:
+                link = item.xpath(kwargs['subxpath'])[0].get('href')
+                print(link)
+                result.append(link)
+                
+        return result
+    
+    @staticmethod
+    def open_link(linklist):
+        for link in linklist:
             webbrowser.open(url=link)
             sleep(0.3)
-        self.linklist.clear()
+        
+        
+
+    def search(self):
+        
+        if self.baidu.isChecked():
+            self.engine_params['baidu']['wd'] = self.keyword
+            for page in range(self.page_num):
+                self.engine_params['baidu']['pn'] =str(page*10+1)
+                
+                r = requests.get(
+                url=self.url, headers=self.headers, params=self.engine_params['baidu'])
+                
+                t = etree.HTML(r.content)
+                selector = t.xpath(self.linkXpath['baidu'])
+                print(selector)
+                for item in selector:
+                    link = item.xpath(self.subxpath['baidu'])[0].get('href')
+                    
+                    self.linklist.append(link)
+            self.open_link(self.linklist)
+
+            
+            
+        elif self.bing.isChecked():
+            
+            self.engine_params['bing']['q'] = self.keyword
+            for page in range(self.page_num):
+                self.engine_params['baidu']['first'] =str(page*10+1)
+                
+                r = requests.get(
+                url=self.url, headers=self.headers, params=self.engine_params['bing'])
+                
+                t = etree.HTML(r.content)
+                selector = t.xpath(self.linkXpath['bing'])
+
+                for i in self.subxpath['bing']:
+                    try:
+                        for item in selector:
+                            
+                            link = item.xpath(i)[0].get('href')
+                            
+                            self.linklist.append(link)
+                    except IndexError:
+                        print("bing引擎sub规则匹配失败，尝试其他规则中……")
+                        
+                        break
+                    
+                    finally:    
+                        continue
+
+            self.open_link(self.linklist)
+            self.linklist.clear()
+            
+        else:
+            self.engine_params['quark']['q'] = self.keyword
+            for page in range(1,self.page_num+1):
+                self.engine_params['quark']['page'] =page
+                
+                r = requests.get(
+                url=self.url, headers=self.headers, params=self.engine_params['quark'])
+                
+                t = etree.HTML(r.content)
+                selector = t.xpath(self.linkXpath['quark'])
+
+                for item in selector:
+                    temp = item.xpath(self.subxpath['quark'])
+                    if len(temp):
+                        link = temp[0].get('href')
+                        self.linklist.append(link)
+
+            
+            self.open_link(self.linklist)
+            
+        
+            
+            
+        
+         
+
+
 
 
 if __name__ == '__main__':
