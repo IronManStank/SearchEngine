@@ -21,7 +21,7 @@ class main(QMainWindow, Ui_MainWindow):
 
     def initUI(self, backgraoundpic: str):
         self.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowIcon(QIcon('./assets/img/xhy.png'))
+        
         
         
 
@@ -205,8 +205,10 @@ class main(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    root = QFileInfo(__file__).absolutePath()
     window = main()
     window.setWindowTitle('SearchEngine')
+    window.setWindowIcon(QIcon(root+'/xhy.png'))
     window.show()
     window.backgroundpic.update()
     sys.exit(app.exec_())
