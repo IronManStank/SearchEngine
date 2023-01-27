@@ -16,13 +16,14 @@ class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.backgroundpic = BackGroundPic()
-        self.config = Config()
-        self.initUI(self.backgroundpic.current_pic, self.config)
+        
+        self.initUI(self.backgroundpic.current_pic)
 
     def initUI(self, backgraoundpic: str, config: Config):
         self.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowIcon(QIcon('./assets/img/xhy.png'))
-        self.setWindowTitle('SearchEngine')
+        
+        
+        
 
         # 设置背景
         if config.back_enable:
@@ -208,8 +209,10 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
+    root = QFileInfo(__file__).absolutePath()
     window = main()
+    window.setWindowTitle('SearchEngine')
+    window.setWindowIcon(QIcon(root+'/xhy.png'))
     window.show()
     window.backgroundpic.update()
     sys.exit(app.exec_())
