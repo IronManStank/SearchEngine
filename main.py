@@ -1,12 +1,15 @@
-import requests
 import sys
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from searchui import Ui_MainWindow
 import webbrowser
-from lxml import etree
 from time import sleep
+
+import requests
+from lxml import etree
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import *
+
+from get_img import BackGroundPic
+from searchui import Ui_MainWindow
 
 
 class main(QMainWindow, Ui_MainWindow):
@@ -15,10 +18,14 @@ class main(QMainWindow, Ui_MainWindow):
         self.initUI()
 
     def initUI(self):
-
         self.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowIcon(QIcon('./assets/img/xhy.png'))
         self.setWindowTitle('SearchEngine')
+
+        # 设置背景
+        backg = BackGroundPic()
+        self.setStyleSheet(
+            f"#MainWindow{{border-image:url({backg.current_pic})}}")
 
         self.setupUi(self)
         # self.baidu.setChecked(True)
