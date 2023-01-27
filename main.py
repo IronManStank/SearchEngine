@@ -15,11 +15,11 @@ class main(QMainWindow, Ui_MainWindow):
         self.initUI()
 
     def initUI(self):
-        
+
         self.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowIcon(QIcon('xhy.png'))
+        self.setWindowIcon(QIcon('./assets/img/xhy.png'))
         self.setWindowTitle('SearchEngine')
- 
+
         self.setupUi(self)
         # self.baidu.setChecked(True)
 
@@ -30,38 +30,34 @@ class main(QMainWindow, Ui_MainWindow):
         self.keyword = ''
         self.page_all_num = 20
         self.page_num = 2
-        
+
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
                                'bing': r'https://cn.bing.com/search',
                                'quark': r'https://www.qwant.com/?q={}&count={}'}
 
         self.url = self.search_url_dic['baidu']
         self.linkXpath = {'baidu': r'//div[@class="result c-container xpath-log new-pmd"]',
-                          'bing':r'/html/body/div[1]/main/ol/li[@class="b_algo"]',
-                          'quark':r'//div[@class="result"]'}
-        
-        self.engine_params = {'baidu':{'wd': self.keyword, 'pn': 1,'tn': 'baiduhome', 'ie': 'utf-8'},
-                              'bing':{'q': self.keyword, 'first': 1},
-                              'quark':{'q': self.keyword, 'count': 1}
+                          'bing': r'/html/body/div[1]/main/ol/li[@class="b_algo"]',
+                          'quark': r'//div[@class="result"]'}
+
+        self.engine_params = {'baidu': {'wd': self.keyword, 'pn': 1, 'tn': 'baiduhome', 'ie': 'utf-8'},
+                              'bing': {'q': self.keyword, 'first': 1},
+                              'quark': {'q': self.keyword, 'count': 1}
                               }
-        
+
         self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
                         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }       
+                        }
 
         self.lineEdit.textChanged.connect(self.setkeyword)
         self.spinBox.valueChanged.connect(self.setpage_all_num)
         self.pushButton.clicked.connect(self.search)
 
-
-
-        
-        
         self.params = {'wd': self.keyword, 'pn': str(
             self.page_all_num), 'tn': 'baiduhome', 'ie': 'utf-8'}
 
         self.linklist = []
-        
+
     @staticmethod
     def rule(x): return x//10+1 if x % 10 != 0 else x//10
 
@@ -86,11 +82,11 @@ class main(QMainWindow, Ui_MainWindow):
         if self.baidu.isChecked():
             pass
         elif self.bing.isChecked():
-            
-            pass       
+
+            pass
         else:
             pass
-        
+
         for page in range(self.page_num):
             print(page)
             self.engine_params['baidu']['wd'] = self.keyword
@@ -107,7 +103,6 @@ class main(QMainWindow, Ui_MainWindow):
                 print(item.xpath('.//h3/a')[0].text)
                 link = item.xpath('.//h3/a')[0].get('href')
                 self.linklist.append(link)
-            
 
         for link in self.linklist:
             webbrowser.open(url=link)
