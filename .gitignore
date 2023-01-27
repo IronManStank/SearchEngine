@@ -19,6 +19,7 @@ dist/
 # local file / dir
 *_local*
 imgs/
+config.json
 
 # OSX file
 .DS_Store

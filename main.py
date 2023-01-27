@@ -7,7 +7,7 @@ from lxml import etree
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import *
-
+from config import Config
 from get_img import BackGroundPic
 from searchui import Ui_MainWindow
 
@@ -16,16 +16,18 @@ class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.backgroundpic = BackGroundPic()
-        self.initUI(self.backgroundpic.current_pic)
+        self.config = Config()
+        self.initUI(self.backgroundpic.current_pic, self.config)
 
-    def initUI(self, backgraoundpic: str):
+    def initUI(self, backgraoundpic: str, config: Config):
         self.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowIcon(QIcon('./assets/img/xhy.png'))
         self.setWindowTitle('SearchEngine')
 
         # 设置背景
-        self.setStyleSheet(
-            f"#MainWindow{{border-image:url({backgraoundpic})}}")
+        if config.back_enable:
+            self.setStyleSheet(
+                f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
         # self.baidu.setChecked(True)
@@ -206,6 +208,7 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
     window = main()
     window.show()
     window.backgroundpic.update()
