@@ -83,12 +83,12 @@ class BackGroundPic(object):
         '''手动更新图片'''
         try:
             self.__rotate()
-        except GetPicError as e:
+        except Exception as e:
             print(f'Err: {e}')
 
     @property
     def current_pic(self):
         '''图片地址，如果尝试3次都失败了会返回默认的'''
         if not isfile(self.__current_pic):
-            return './assets/img/xhy.png'
+            return './assets/img/1.jpg'
         return self.__current_pic
