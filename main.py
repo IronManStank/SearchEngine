@@ -55,9 +55,12 @@ class main(QMainWindow, Ui_MainWindow):
                               'quark': {'q': self.keyword, 'snum': '10', 'page': 1}
                               }
 
-        self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
-                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }
+        self.headers = {
+            'User-Agent':
+            'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) \
+AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        }
 
         self.lineEdit.textChanged.connect(self.setkeyword)
         self.spinBox.valueChanged.connect(self.setpage_all_num)
