@@ -4,7 +4,7 @@
 
 快速打开需要搜索的信息，一键直达！
 
-![img](./xhy.png)
+![img](./assets/img/xhy.png)
 
 **痛点：**
 
