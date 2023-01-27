@@ -16,14 +16,11 @@ class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.backgroundpic = BackGroundPic()
-        
-        self.initUI(self.backgroundpic.current_pic)
+        self.configfile = Config()
+        self.initUI(self.backgroundpic.current_pic, self.configfile)
 
     def initUI(self, backgraoundpic: str, config: Config):
         self.setStyle(QStyleFactory.create('Fusion'))
-        
-        
-        
 
         # 设置背景
         if config.back_enable:
