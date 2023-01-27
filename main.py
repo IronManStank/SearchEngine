@@ -1,25 +1,32 @@
-import requests
 import sys
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from searchui import Ui_MainWindow
 import webbrowser
-from lxml import etree
 from time import sleep
+
+import requests
+from lxml import etree
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import *
+
+from get_img import BackGroundPic
+from searchui import Ui_MainWindow
 
 
 class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.backgroundpic = BackGroundPic()
+        self.initUI(self.backgroundpic.current_pic)
 
-    def initUI(self):
-        
+    def initUI(self, backgraoundpic: str):
         self.setStyle(QStyleFactory.create('Fusion'))
-        self.setWindowIcon(QIcon('xhy.png'))
+        self.setWindowIcon(QIcon('./assets/img/xhy.png'))
         self.setWindowTitle('SearchEngine')
- 
+
+        # 设置背景
+        self.setStyleSheet(
+            f"#MainWindow{{border-image:url({backgraoundpic})}}")
+
         self.setupUi(self)
         # self.baidu.setChecked(True)
 
@@ -30,7 +37,7 @@ class main(QMainWindow, Ui_MainWindow):
         self.keyword = ''
         self.page_all_num = 20
         self.page_num = 2
-        
+
         self.search_url_dic = {'baidu': r'https://www.baidu.com/s',
                                'bing': r'https://cn.bing.com/search',
                                'quark': r'https://quark.sm.cn/s'}
@@ -47,10 +54,10 @@ class main(QMainWindow, Ui_MainWindow):
                               'bing':{'q': self.keyword, 'first': 1},
                               'quark':{'q': self.keyword, 'snum': '10','page':1}
                               }
-        
+
         self.headers = {'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg/109.0.1518.55',
                         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                        }       
+                        }
 
         self.lineEdit.textChanged.connect(self.setkeyword)
         self.spinBox.valueChanged.connect(self.setpage_all_num)
@@ -63,7 +70,7 @@ class main(QMainWindow, Ui_MainWindow):
 
 
         self.linklist = []
-        
+
     @staticmethod
     def rule(x): return x//10+1 if x % 10 != 0 else x//10
 
@@ -219,4 +226,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = main()
     window.show()
+    window.backgroundpic.update()
     sys.exit(app.exec_())

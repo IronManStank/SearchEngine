@@ -18,6 +18,7 @@ dist/
 
 # local file / dir
 *_local*
+imgs/
 
 # OSX file
 .DS_Store
