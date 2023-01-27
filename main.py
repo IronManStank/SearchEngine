@@ -16,12 +16,14 @@ class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.backgroundpic = BackGroundPic()
+        
         self.initUI(self.backgroundpic.current_pic)
 
     def initUI(self, backgraoundpic: str):
         self.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowIcon(QIcon('./assets/img/xhy.png'))
-        self.setWindowTitle('SearchEngine')
+        
+        
 
         # 设置背景
         self.setStyleSheet(
@@ -204,6 +206,7 @@ class main(QMainWindow, Ui_MainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = main()
+    window.setWindowTitle('SearchEngine')
     window.show()
     window.backgroundpic.update()
     sys.exit(app.exec_())
