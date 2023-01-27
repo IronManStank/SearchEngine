@@ -15,17 +15,17 @@ from searchui import Ui_MainWindow
 class main(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        self.initUI()
+        self.backgroundpic = BackGroundPic()
+        self.initUI(self.backgroundpic.current_pic)
 
-    def initUI(self):
+    def initUI(self, backgraoundpic: str):
         self.setStyle(QStyleFactory.create('Fusion'))
         self.setWindowIcon(QIcon('./assets/img/xhy.png'))
         self.setWindowTitle('SearchEngine')
 
         # 设置背景
-        backg = BackGroundPic()
         self.setStyleSheet(
-            f"#MainWindow{{border-image:url({backg.current_pic})}}")
+            f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
         # self.baidu.setChecked(True)
@@ -121,4 +121,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = main()
     window.show()
+    window.backgroundpic.update()
     sys.exit(app.exec_())

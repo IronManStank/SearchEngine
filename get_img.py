@@ -9,8 +9,8 @@
 
 from get_img import BackGroundPic
 
-backg = BackGroundPic() # 实例化就已经更新图片了
-backg.update()          # 也可以手动更新
+backg = BackGroundPic() # 实例化不会更新图片
+backg.update()          # 手动更新
 backg.current_pic       # 图片位置
 
 '''
@@ -63,7 +63,7 @@ class BackGroundPic(object):
             makedirs(self.IMG_DIR)
             print('创建文件夹:', self.IMG_DIR)
 
-        self.update()
+        # self.update()
 
     def __rotate(self):
         '''删除旧的，获取新的'''
