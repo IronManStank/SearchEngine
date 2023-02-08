@@ -152,7 +152,7 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                     link = item.xpath(self.subxpath['baidu'])[0].get('href')
 
                     self.linklist.append(link)
-            self.open_link(self.linklist)
+        
 
         elif self.bing.isChecked():
 
@@ -181,8 +181,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                     finally:
                         continue
 
-            self.open_link(self.linklist)
-            self.linklist.clear()
+        
+            
 
         else:
             self.engine_params['quark']['q'] = self.keyword
@@ -201,7 +201,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                         link = temp[0].get('href')
                         self.linklist.append(link)
 
-            self.open_link(self.linklist)
+        self.open_link(self.linklist)
+        self.linklist.clear()
 
 
 if __name__ == '__main__':
