@@ -158,77 +158,82 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
 
     def search(self):
         self.linklist.clear()
+        self.keyword = self.lineEdit.text()
+        if len(self.keyword):
 
-        if self.baidu.isChecked():
-            self.engine_params["baidu"]["wd"] = self.keyword
-            for page in range(self.page_num):
-                self.engine_params["baidu"]["pn"] = str(page * 10 + 1)
+            if self.baidu.isChecked():
+                self.engine_params["baidu"]["wd"] = self.keyword
+                for page in range(self.page_num):
+                    self.engine_params["baidu"]["pn"] = str(page * 10 + 1)
 
-                r = requests.get(
-                    url=self.url,
-                    headers=self.headers,
-                    params=self.engine_params["baidu"],
-                )
+                    r = requests.get(
+                        url=self.url,
+                        headers=self.headers,
+                        params=self.engine_params["baidu"],
+                    )
 
-                t = etree.HTML(r.content)
-                selector = t.xpath(self.linkXpath["baidu"])
-                print(selector)
-                for item in selector:
-                    link = item.xpath(self.subxpath["baidu"])[0].get("href")
+                    t = etree.HTML(r.content)
+                    selector = t.xpath(self.linkXpath["baidu"])
+                    print(selector)
+                    for item in selector:
+                        link = item.xpath(self.subxpath["baidu"])[0].get("href")
 
-                    self.linklist.append(link)
-
-        elif self.bing.isChecked():
-
-            self.engine_params["bing"]["q"] = self.keyword
-            for page in range(self.page_num):
-                self.engine_params["bing"]["first"] = str(page * 10 + 1)
-
-                r = requests.get(
-                    url=self.url,
-                    headers=self.headers,
-                    params=self.engine_params["bing"],
-                )
-
-                t = etree.HTML(r.content)
-                selector = t.xpath(self.linkXpath["bing"])
-
-                for i in self.subxpath["bing"]:
-                    try:
-                        for item in selector:
-
-                            link = item.xpath(i)[0].get("href")
-
-                            self.linklist.append(link)
-                    except IndexError:
-                        print("bing引擎sub规则匹配失败，尝试其他规则中……")
-
-                        break
-
-                    finally:
-                        continue
-
-        else:
-            self.engine_params["quark"]["q"] = self.keyword
-            for page in range(1, self.page_num + 1):
-                self.engine_params["quark"]["page"] = page
-
-                r = requests.get(
-                    url=self.url,
-                    headers=self.headers,
-                    params=self.engine_params["quark"],
-                )
-
-                t = etree.HTML(r.content)
-                selector = t.xpath(self.linkXpath["quark"])
-
-                for item in selector:
-                    temp = item.xpath(self.subxpath["quark"])
-                    if len(temp):
-                        link = temp[0].get("href")
                         self.linklist.append(link)
 
-        self.open_link(self.linklist)
+            elif self.bing.isChecked():
+
+                self.engine_params["bing"]["q"] = self.keyword
+                for page in range(self.page_num):
+                    self.engine_params["bing"]["first"] = str(page * 10 + 1)
+
+                    r = requests.get(
+                        url=self.url,
+                        headers=self.headers,
+                        params=self.engine_params["bing"],
+                    )
+
+                    t = etree.HTML(r.content)
+                    selector = t.xpath(self.linkXpath["bing"])
+
+                    for i in self.subxpath["bing"]:
+                        try:
+                            for item in selector:
+
+                                link = item.xpath(i)[0].get("href")
+
+                                self.linklist.append(link)
+                        except IndexError:
+                            print("bing引擎sub规则匹配失败，尝试其他规则中……")
+
+                            break
+
+                        finally:
+                            continue
+
+            else:
+                self.engine_params["quark"]["q"] = self.keyword
+                for page in range(1, self.page_num + 1):
+                    self.engine_params["quark"]["page"] = page
+
+                    r = requests.get(
+                        url=self.url,
+                        headers=self.headers,
+                        params=self.engine_params["quark"],
+                    )
+
+                    t = etree.HTML(r.content)
+                    selector = t.xpath(self.linkXpath["quark"])
+
+                    for item in selector:
+                        temp = item.xpath(self.subxpath["quark"])
+                        if len(temp):
+                            link = temp[0].get("href")
+                            self.linklist.append(link)
+            print(self.keyword)
+            # self.open_link(self.linklist)
+            self.keyword = ""
+        else:
+            QMessageBox.warning(self, "警告", "请输入关键字后再使用高级功能!", QMessageBox.Yes)
 
     def process_advanced_params(self):
         if self.ad_close:
@@ -243,19 +248,24 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
         print(self.keyword)
 
     def AdvancedOptions(self):
+        self.keyword = self.lineEdit.text()
         conn = dialog()
         conn.show()
         conn.exec_()
         self.config = conn.generate_cofigure()
         # self.config = glo.get_value('config')
-        if self.config:
-            self.ad_close = self.config["ad_close"]
-            self.all_kw = self.config["all_kw"]
-            self.site = self.config["site"]
-            self.file_type = self.config["filetype"]
+        if len(self.keyword):
+            if self.config:
+                self.ad_close = self.config["ad_close"]
+                self.all_kw = self.config["all_kw"]
+                self.site = self.config["site"]
+                self.file_type = self.config["filetype"]
+
+            else:
+                self.init_sub_settings()
+            self.process_advanced_params()
         else:
-            self.init_sub_settings()
-        self.process_advanced_params()
+            QMessageBox.warning(self, "注意", "请输入关键字后再使用高级功能!", QMessageBox.Yes)
 
 
 if __name__ == "__main__":

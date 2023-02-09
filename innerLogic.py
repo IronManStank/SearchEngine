@@ -97,7 +97,7 @@ class dialog(QDialog, Ui_Dialog, Info):
 
     # 注意高级功能的逻辑关系；首先添加关键字，最后加上引号
     def set_site(self):
-        temp_str = " site:"
+        temp_str = " site: "
         if self.checkBox_tb.isChecked():
             self.site = temp_str + self.site_info["tb"]
         elif self.checkBox_jd.isChecked():
@@ -120,8 +120,7 @@ class dialog(QDialog, Ui_Dialog, Info):
 
     def filetype(self, e):
         self.rule()
-        if e.text() == "限定网站":
-            self.judger()
+
         if self.checkBox_filetype.isChecked():
             self.file_type = " filetype:pdf"
         else:
