@@ -229,4 +229,4 @@ class Ui_Dialog(object):
         self.checkBox_zhihu.setText(_translate("Dialog", "知乎"))
         self.checkBox_gitee.setText(_translate("Dialog", "Gitee"))
         self.checkBox_github.setText(_translate("Dialog", "GitHub"))
-        self.checkBox_cdsn.setText(_translate("Dialog", "CDSN"))
+        self.checkBox_cdsn.setText(_translate("Dialog", "CSDN"))

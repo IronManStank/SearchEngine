@@ -29,9 +29,9 @@ class main(QMainWindow, Ui_MainWindow):
             self.setStyleSheet(f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
-       
+
         # mainpage settings
-        
+
         self.baidu.stateChanged.connect(lambda: self.search_url(self.baidu))
         self.bing.stateChanged.connect(lambda: self.search_url(self.bing))
         self.quark.stateChanged.connect(lambda: self.search_url(self.quark))
@@ -39,11 +39,9 @@ class main(QMainWindow, Ui_MainWindow):
         self.keyword = ""
         self.page_all_num = 20
         self.page_num = 2
-        
+
         # innerpage settings
         self.init_sub_settings()
-
-        
 
         self.search_url_dic = {
             "baidu": r"https://www.baidu.com/s",
@@ -87,10 +85,10 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
     @staticmethod
     def rule(x):
         return x // 10 + 1 if x % 10 != 0 else x // 10
-    
+
     def init_sub_settings(self):
         self.cofig = None
-        self.ad_close  = False
+        self.ad_close = False
         self.all_kw = False
         self.site = None
         self.file_type = None
@@ -104,7 +102,6 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
         print(self.page_all_num)
 
     def search_url(self, e):
-        print(e)
         print(e.text())
         if e.text() == "百度":
             self.url = self.search_url_dic["baidu"]
@@ -160,9 +157,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
             webbrowser.open(url=link)
             sleep(0.3)
 
-        
-        
     def search(self):
+        self.linklist.clear()
 
         if self.baidu.isChecked():
             self.engine_params["baidu"]["wd"] = self.keyword
@@ -187,7 +183,7 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
 
             self.engine_params["bing"]["q"] = self.keyword
             for page in range(self.page_num):
-                self.engine_params["baidu"]["first"] = str(page * 10 + 1)
+                self.engine_params["bing"]["first"] = str(page * 10 + 1)
 
                 r = requests.get(
                     url=self.url,
@@ -234,9 +230,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                         self.linklist.append(link)
 
         self.open_link(self.linklist)
-        self.linklist.clear()
         
-        
+
     def process_advanced_params(self):
         if self.ad_close:
             self.setStyleSheet("")
@@ -246,7 +241,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
             self.keyword = self.keyword + self.site
         if self.all_kw:
             self.keyword = '"' + self.keyword + '"'
-        
+            
+        print(self.keyword)
 
     def AdvancedOptions(self):
         conn = dialog()
@@ -255,10 +251,10 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
         self.config = conn.generate_cofigure()
         # self.config = glo.get_value('config')
         if self.config:
-            self.ad_close = self.config['ad_close']
-            self.all_kw = self.config['all_kw']
-            self.site = self.config['site']
-            self.file_type = self.config['filetype']                            
+            self.ad_close = self.config["ad_close"]
+            self.all_kw = self.config["all_kw"]
+            self.site = self.config["site"]
+            self.file_type = self.config["filetype"]
         else:
             self.init_sub_settings()
         self.process_advanced_params()

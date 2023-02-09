@@ -24,13 +24,7 @@ class Info:
 class dialog(QDialog, Ui_Dialog, Info):
     def __init__(self):
 
-        __adStatus = True
-
-        super(dialog, self).__init__()
-
-        # self.setWindowTitle('Advanced Options')
-
-        # self.setupUi(self)
+        super(dialog, self).__init__()  
 
         self.initUI()
 
@@ -45,6 +39,9 @@ class dialog(QDialog, Ui_Dialog, Info):
         self.all_kw = False
         self.ad_close = False
 
+        self.checkBox_filetype.setTristate(False)
+        self.checkBox_kw.setTristate(False)
+        self.checkBox_closead.setTristate(False)
         self.checkBox_site.setTristate(True)
 
         self.checkBox_site.setCheckState(Qt.PartiallyChecked)
@@ -121,29 +118,45 @@ class dialog(QDialog, Ui_Dialog, Info):
         else:
             self.site = None
 
+
     def choose_site(self):
+
         self.judger()
         self.set_site()
 
     def filetype(self, e):
+
         if e.text() == "限定网站":
             self.judger()
-
-        # print(e.text())
-
         if self.checkBox_filetype.isChecked():
-
             self.file_type = " filetype:pdf"
-
         else:
-
             self.file_type = None
+            
+    def rule(self):
+        if self.checkBox_filetype.isChecked():
+            self.checkBox_kw.setCheckState(False)
+        elif self.checkBox_kw.isChecked():
+            self.checkBox_filetype.setCheckState(False)
 
     def set_allkw(self):
+        self.rule()
+         
         if self.checkBox_kw.isChecked():
+            
+            self.checkBox_filetype.setCheckState(False)
+            # self.checkBox_filetype.setCheckable(False)
+            self.checkBox_site.setCheckable(False)
+            self.checkBox_site.setTristate()
+            
             self.all_kw = True
         else:
-            self.all_kw = False
+                
+                self.checkBox_filetype.setCheckable(True)
+                self.checkBox_site.setCheckable(True)
+                
+            
+                self.all_kw = False
 
     # 未点击时默认开，防止过度点击。该变量不可访问.
     def close_add(self):
