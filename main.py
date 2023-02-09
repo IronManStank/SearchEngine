@@ -29,8 +29,9 @@ class main(QMainWindow, Ui_MainWindow):
             self.setStyleSheet(f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
-        # self.baidu.setChecked(True)
-
+       
+        # mainpage settings
+        
         self.baidu.stateChanged.connect(lambda: self.search_url(self.baidu))
         self.bing.stateChanged.connect(lambda: self.search_url(self.bing))
         self.quark.stateChanged.connect(lambda: self.search_url(self.quark))
@@ -38,7 +39,11 @@ class main(QMainWindow, Ui_MainWindow):
         self.keyword = ""
         self.page_all_num = 20
         self.page_num = 2
-        self.cofig = None
+        
+        # innerpage settings
+        self.init_sub_settings()
+
+        
 
         self.search_url_dic = {
             "baidu": r"https://www.baidu.com/s",
@@ -82,6 +87,13 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
     @staticmethod
     def rule(x):
         return x // 10 + 1 if x % 10 != 0 else x // 10
+    
+    def init_sub_settings(self):
+        self.cofig = None
+        self.ad_close  = False
+        self.all_kw = False
+        self.site = None
+        self.file_type = None
 
     def setkeyword(self, keyword):
         self.keyword = keyword
@@ -148,6 +160,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
             webbrowser.open(url=link)
             sleep(0.3)
 
+        
+        
     def search(self):
 
         if self.baidu.isChecked():
@@ -221,6 +235,18 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
 
         self.open_link(self.linklist)
         self.linklist.clear()
+        
+        
+    def process_advanced_params(self):
+        if self.ad_close:
+            self.setStyleSheet("")
+        if self.file_type:
+            self.keyword = self.keyword + self.file_type
+        if self.site:
+            self.keyword = self.keyword + self.site
+        if self.all_kw:
+            self.keyword = '"' + self.keyword + '"'
+        
 
     def AdvancedOptions(self):
         conn = dialog()
@@ -228,7 +254,14 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
         conn.exec_()
         self.config = conn.generate_cofigure()
         # self.config = glo.get_value('config')
-        print(self.config)
+        if self.config:
+            self.ad_close = self.config['ad_close']
+            self.all_kw = self.config['all_kw']
+            self.site = self.config['site']
+            self.file_type = self.config['filetype']                            
+        else:
+            self.init_sub_settings()
+        self.process_advanced_params()
 
 
 if __name__ == "__main__":
