@@ -15,7 +15,7 @@ venv/
 build/
 dist/
 *.spec
-
+output/
 # local file / dir
 *_local*
 imgs/

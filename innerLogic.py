@@ -24,7 +24,7 @@ class Info:
 class dialog(QDialog, Ui_Dialog, Info):
     def __init__(self):
 
-        super(dialog, self).__init__()  
+        super(dialog, self).__init__()
 
         self.initUI()
 
@@ -34,15 +34,11 @@ class dialog(QDialog, Ui_Dialog, Info):
 
         self.setWindowTitle("Advanced Options")
 
-        self.file_type = None
-        self.site = None
-        self.all_kw = False
-        self.ad_close = False
+        self.init_params()
 
-        self.checkBox_filetype.setTristate(False)
-        self.checkBox_kw.setTristate(False)
-        self.checkBox_closead.setTristate(False)
-        self.checkBox_site.setTristate(True)
+        self.checkBox_kw.setChecked(False)
+        self.checkBox_filetype.setChecked(False)
+        self.checkBox_site.setTristate(1)
 
         self.checkBox_site.setCheckState(Qt.PartiallyChecked)
 
@@ -76,16 +72,15 @@ class dialog(QDialog, Ui_Dialog, Info):
 
     # 重置所有subbox
 
-    @staticmethod
-    def set_sub_false(sub_list: list):
-        for item in sub_list:
-            item.setCheckState(False)
+    def set_sub_false(self):
+        for item in self.sub_box:
+            item.setChecked(False)
             item.setCheckable(False)
 
-    @staticmethod
-    def set_sub_true(sub_list: list):
-        for item in sub_list:
-            item.setCheckState(0)
+    def set_sub_true(self):
+
+        for item in self.sub_box:
+            item.setChecked(False)
             item.setCheckable(True)
 
     # 定义全局逻辑关系
@@ -94,9 +89,9 @@ class dialog(QDialog, Ui_Dialog, Info):
 
         if self.checkBox_site.checkState() != 2:
 
-            self.set_sub_false(self.sub_box)
+            self.set_sub_false()
         else:
-            self.set_sub_true(self.sub_box)
+            self.set_sub_true()
 
         # print(self.checkBox_site.checkState())
 
@@ -118,45 +113,47 @@ class dialog(QDialog, Ui_Dialog, Info):
         else:
             self.site = None
 
-
     def choose_site(self):
 
         self.judger()
         self.set_site()
 
     def filetype(self, e):
-
+        self.rule()
         if e.text() == "限定网站":
             self.judger()
         if self.checkBox_filetype.isChecked():
             self.file_type = " filetype:pdf"
         else:
             self.file_type = None
-            
+
     def rule(self):
+
         if self.checkBox_filetype.isChecked():
-            self.checkBox_kw.setCheckState(False)
+
+            self.checkBox_kw.setChecked(False)
+            # self.checkBox_kw.setCheckable(False)
         elif self.checkBox_kw.isChecked():
-            self.checkBox_filetype.setCheckState(False)
+            self.checkBox_filetype.setChecked(False)
+            # self.checkBox_filetype.setCheckable(False)
 
     def set_allkw(self):
-        self.rule()
-         
+        self.set_sub_false()
+
         if self.checkBox_kw.isChecked():
-            
-            self.checkBox_filetype.setCheckState(False)
+
+            self.checkBox_filetype.setChecked(False)
             # self.checkBox_filetype.setCheckable(False)
             self.checkBox_site.setCheckable(False)
-            self.checkBox_site.setTristate()
-            
+            self.checkBox_site.setTristate(1)
+
             self.all_kw = True
         else:
-                
-                self.checkBox_filetype.setCheckable(True)
-                self.checkBox_site.setCheckable(True)
-                
-            
-                self.all_kw = False
+
+            self.checkBox_filetype.setCheckable(True)
+            self.checkBox_site.setCheckable(True)
+
+            self.all_kw = False
 
     # 未点击时默认开，防止过度点击。该变量不可访问.
     def close_add(self):

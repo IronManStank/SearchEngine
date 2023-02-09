@@ -11,7 +11,6 @@ from config import Config
 from get_img import BackGroundPic
 from searchui import Ui_MainWindow
 from innerLogic import dialog
-import glo
 
 
 class main(QMainWindow, Ui_MainWindow):
@@ -230,7 +229,6 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                         self.linklist.append(link)
 
         self.open_link(self.linklist)
-        
 
     def process_advanced_params(self):
         if self.ad_close:
@@ -241,7 +239,7 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
             self.keyword = self.keyword + self.site
         if self.all_kw:
             self.keyword = '"' + self.keyword + '"'
-            
+
         print(self.keyword)
 
     def AdvancedOptions(self):
