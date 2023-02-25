@@ -26,7 +26,7 @@ class main(QMainWindow, Ui_MainWindow):
 
         # 设置背景
         if config.back_enable:
-            self.setStyleSheet(f"#MainWindow{{border-image:url({backgraoundpic})}}")
+            self.setStyleSheet(f"#MainWindow{{border-image:url({backgroundpic})}}")
 
         self.setupUi(self)
 
