@@ -20,12 +20,15 @@ class main(QMainWindow, Ui_MainWindow):
         self.configfile = Config()
         self.initUI(self.backgroundpic.current_pic, self.configfile)
 
-    def initUI(self, backgraoundpic: str, config: Config):
+    def initUI(self, backgroundpic: str, config: Config):
         self.setStyle(QStyleFactory.create("Fusion"))
+        
 
         # 设置背景
         if config.back_enable:
-            self.setStyleSheet(f"#MainWindow{{border-image:url({backgraoundpic})}}")
+            self.setStyleSheet(f"#MainWindow{{border-image:url({backgroundpic});border-color:rbga(0,0,0,50%);border:none;}}")
+            # self.setWindowOpacity(0.9)
+            # self.setAttribute(Qt.WA_TranslucentBackground)
 
         self.setupUi(self)
 
@@ -229,8 +232,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                         if len(temp):
                             link = temp[0].get("href")
                             self.linklist.append(link)
-            print(self.keyword)
-            # self.open_link(self.linklist)
+            # print(self.keyword)
+            self.open_link(self.linklist)
             self.keyword = ""
         else:
             QMessageBox.warning(self, "警告", "请输入关键字后再使用高级功能!", QMessageBox.Yes)
@@ -267,6 +270,11 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
         else:
             QMessageBox.warning(self, "注意", "请输入关键字后再使用高级功能!", QMessageBox.Yes)
 
+    def keyPressEvent(self, e):
+        if e.key() == Qt.Key_Enter:
+            self.search()
+        if e.key() == Qt.Key_Escape:
+            self.close()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
