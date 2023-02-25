@@ -26,9 +26,7 @@ class main(QMainWindow, Ui_MainWindow):
 
         # 设置背景
         if config.back_enable:
-            self.setStyleSheet(f"#MainWindow{{border-image:url({backgroundpic});border-color:rbga(0,0,0,50%);border:none;}}")
-            # self.setWindowOpacity(0.9)
-            # self.setAttribute(Qt.WA_TranslucentBackground)
+            self.setStyleSheet(f"#MainWindow{{border-image:url({backgraoundpic})}}")
 
         self.setupUi(self)
 
@@ -179,7 +177,8 @@ AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Mobile Safari/537.36 Edg
                     selector = t.xpath(self.linkXpath["baidu"])
                     print(selector)
                     for item in selector:
-                        link = item.xpath(self.subxpath["baidu"])[0].get("href")
+                        link = item.xpath(self.subxpath["baidu"])[
+                            0].get("href")
 
                         self.linklist.append(link)
 
