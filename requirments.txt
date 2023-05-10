@@ -1,4 +1,4 @@
 PyQt5==5.15.9
-requests==2.29.0
+requests==2.30.0
 lxml==4.9.2
 retry==0.9.2
